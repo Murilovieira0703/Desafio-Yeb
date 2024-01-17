@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Desafio - Yeb</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="main.css">
+    <!--conexão com stilos pré-animados do css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!--elemento raiz do vue.js-->
+    <div id="app">
+        <div>
+            <router-view></router-view>
+        </div>
+    </div>
+    <!--conexão com a API axios que buscará os dados dos usuários-->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
+    <!--conexão com o vue.js, estamos em um ambiente CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!--conexão com o vue-router, usado para criar nossas rotas-->
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.5.2/dist/vue-router.min.js"></script>
+    <!--conexão com o vuex, usado para realizar nosso tráfego de dados-->
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.js"></script>
+    <!--script principal da aplicação-->
+    <script type="module">
+    const Home = {
+        //definição de nossa página de início
+    template:`<div id="containerhome" class="animate__animated animate__fadeIn"> 
+                <div id="logoBar"> 
+                    <a class="logoBar_link"> 
+                        <img class="gitimg" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjYgMC0xMiA1LjM3My0xMiAxMiAwIDUuMzAyIDMuNDM4IDkuOCA4LjIwNyAxMS4zODcuNTk5LjExMS43OTMtLjI2MS43OTMtLjU3N3YtMi4yMzRjLTMuMzM4LjcyNi00LjAzMy0xLjQxNi00LjAzMy0xLjQxNi0uNTQ2LTEuMzg3LTEuMzMzLTEuNzU2LTEuMzMzLTEuNzU2LTEuMDg5LS43NDUuMDgzLS43MjkuMDgzLS43MjkgMS4yMDUuMDg0IDEuODM5IDEuMjM3IDEuODM5IDEuMjM3IDEuMDcgMS44MzQgMi44MDcgMS4zMDQgMy40OTIuOTk3LjEwNy0uNzc1LjQxOC0xLjMwNS43NjItMS42MDQtMi42NjUtLjMwNS01LjQ2Ny0xLjMzNC01LjQ2Ny01LjkzMSAwLTEuMzExLjQ2OS0yLjM4MSAxLjIzNi0zLjIyMS0uMTI0LS4zMDMtLjUzNS0xLjUyNC4xMTctMy4xNzYgMCAwIDEuMDA4LS4zMjIgMy4zMDEgMS4yMy45NTctLjI2NiAxLjk4My0uMzk5IDMuMDAzLS40MDQgMS4wMi4wMDUgMi4wNDcuMTM4IDMuMDA2LjQwNCAyLjI5MS0xLjU1MiAzLjI5Ny0xLjIzIDMuMjk3LTEuMjMuNjUzIDEuNjUzLjI0MiAyLjg3NC4xMTggMy4xNzYuNzcuODQgMS4yMzUgMS45MTEgMS4yMzUgMy4yMjEgMCA0LjYwOS0yLjgwNyA1LjYyNC01LjQ3OSA1LjkyMS40My4zNzIuODIzIDEuMTAyLjgyMyAyLjIyMnYzLjI5M2MwIC4zMTkuMTkyLjY5NC44MDEuNTc2IDQuNzY1LTEuNTg5IDguMTk5LTYuMDg2IDguMTk5LTExLjM4NiAwLTYuNjI3LTUuMzczLTEyLTEyLTEyeiIvPjwvc3ZnPg=="> 
+                        <h1 class=""><span class="tbold">Github</span> profiles</h1> 
+                    </a> 
+                </div> 
+                <div id="home"> 
+                    <div class="new-username wrapper"> 
+                        <label class="newUser"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z"></path></svg> 
+                            <input type="text" class="newUser_input" placeholder="Insert a username" v-model="username" @keyup.enter="searchUser"> 
+                        </label> 
+                    </div> 
+                </div> 
+            </div>`,
+            //dados locais do componente
+            data() {
+                return {
+                    username: '',
+                    user: {}
+                };
+            },
+            methods: {
+                //função para buscar os dados do usuário
+                async searchUser() {
+                    //verifica se o nome de usuário está vazio
+                    if (this.username.trim() === '') {
+                        return;
+                    }
+                    //configuração da chamada à API do github
+                    const res = await axios.get('https://happypaw.website/token.php');
+                    const token = res.data.token;
+                    console.log(token);
+                    const url = `https://api.github.com/users/${this.username}`;
+                    const headers = {
+                        Authorization: `Bearer ${token}`,
+                    };
+
+                    try {
+                        //realiza a chamada
+                        const response = await axios.get(url, { headers });
+                        //atualiza o estado global do vuex com os dados
+                        this.$store.commit('setUser', response.data); // Enviando dados para o Vuex
+                        //nos envia para a rota seguinte
+                        this.$router.push({ path: `/user/${this.username}` });                        
+
+                    } catch (error) {
+                        //pequeno tratamento em caso de erros
+                        console.error('Error fetching user:', error);
+                    }
+                }
+            }
+        };
+        //definição da página com os dados
+        const UserDetails = {
+            data() {
+                //dadps locais que seerão utilizados no componente
+                return {
+                    nome: '',
+                    //activeTab é uma criação parra facilitar na troca das rotas(repos,starred) dentro da página do usuário
+                    activeTab: 'Repos',
+                    repos: [],
+                    starred: [],
+                    //originalRepos e originalStarred são dois facilitadores para ajudar os filtros
+                    originalRepos: [],
+                    originalStarred: [],
+                    filterText: '',
+                };
+            },
+            created() {
+                //função chamada quando o componente é criado
+            if (this.$route.params.username) {
+                //define o nome de usuário a partir dos parâmetros
+                this.nome = this.$route.params.username;
+                //inicializa a busca de dados
+                this.fetchData();
+            }
+        },
+        watch: {
+            //monitora mudanças nos parâmetros da rota
+            '$route.params.username': 'fetchData'
+        },
+        methods: {
+            //função para buscar dados do usuário e repositórios
+            async fetchData() {
+                //configuração da segunda chamada API
+                const res = await axios.get('https://happypaw.website/token.php');
+                const token = res.data.token;
+                const urlRepos = `https://api.github.com/users/${this.nome}/repos`;
+                const urlStarred = `https://api.github.com/users/${this.nome}/starred`;
+
+                const headers = {
+                    Authorization: `Bearer ${token}`,
+                };
+
+                try {  
+                    //chamada para obter os dados de respositórios
+                    const reposResponse = await axios.get(urlRepos, { headers });
+                    const starredResponse = await axios.get(urlStarred, { headers });
+                    //atualiza os dados locais com os resultados obtidos
+                    this.repos = reposResponse.data;
+                    this.starred = starredResponse.data;
+
+                } catch (error) {
+                    //pequeno tratamento de erro caso nada seja encontrado
+                    console.error('Error fetching user data:', error);
+                }
+                //resoluçõ pra manter cópia dos repositórios originais, assim o filtro sempre voltá no início
+                this.originalRepos = [...this.repos];
+                this.originalStarred = [...this.starred];
+            },
+            //função para alternar entre as abas de repositório
+            changeTab(tab){
+                this.activeTab = tab;
+            },
+            //função para aplicar filtro nos dados
+            applyFilter() {
+                const filterLowerCase = this.filterText.toLowerCase();
+                const originalList = this.activeTab === 'Repos' ? this.originalRepos : this.originalStarred;
+
+                //restaura a lista original se o filtro estiver vazio
+                this[this.activeTab.toLowerCase()] = filterLowerCase
+                    ? originalList.filter(repo => repo.name.toLowerCase().includes(filterLowerCase))
+                    : [...originalList];
+            },
+            //função para limpar o filtro
+            clearFilter() {
+                this.filterText = '';
+                this.applyFilter();
+            },
+        },
+        //definição de nossa página de usuário
+            template:`
+            <div id="containerUser" class="animate__animated animate__fadeIn"> 
+                <div id="logoBar"> 
+                    <a class="logoBar_link"> 
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjYgMC0xMiA1LjM3My0xMiAxMiAwIDUuMzAyIDMuNDM4IDkuOCA4LjIwNyAxMS4zODcuNTk5LjExMS43OTMtLjI2MS43OTMtLjU3N3YtMi4yMzRjLTMuMzM4LjcyNi00LjAzMy0xLjQxNi00LjAzMy0xLjQxNi0uNTQ2LTEuMzg3LTEuMzMzLTEuNzU2LTEuMzMzLTEuNzU2LTEuMDg5LS43NDUuMDgzLS43MjkuMDgzLS43MjkgMS4yMDUuMDg0IDEuODM5IDEuMjM3IDEuODM5IDEuMjM3IDEuMDcgMS44MzQgMi44MDcgMS4zMDQgMy40OTIuOTk3LjEwNy0uNzc1LjQxOC0xLjMwNS43NjItMS42MDQtMi42NjUtLjMwNS01LjQ2Ny0xLjMzNC01LjQ2Ny01LjkzMSAwLTEuMzExLjQ2OS0yLjM4MSAxLjIzNi0zLjIyMS0uMTI0LS4zMDMtLjUzNS0xLjUyNC4xMTctMy4xNzYgMCAwIDEuMDA4LS4zMjIgMy4zMDEgMS4yMy45NTctLjI2NiAxLjk4My0uMzk5IDMuMDAzLS40MDQgMS4wMi4wMDUgMi4wNDcuMTM4IDMuMDA2LjQwNCAyLjI5MS0xLjU1MiAzLjI5Ny0xLjIzIDMuMjk3LTEuMjMuNjUzIDEuNjUzLjI0MiAyLjg3NC4xMTggMy4xNzYuNzcuODQgMS4yMzUgMS45MTEgMS4yMzUgMy4yMjEgMCA0LjYwOS0yLjgwNyA1LjYyNC01LjQ3OSA1LjkyMS40My4zNzIuODIzIDEuMTAyLjgyMyAyLjIyMnYzLjI5M2MwIC4zMTkuMTkyLjY5NC44MDEuNTc2IDQuNzY1LTEuNTg5IDguMTk5LTYuMDg2IDguMTk5LTExLjM4NiAwLTYuNjI3LTUuMzczLTEyLTEyLTEyeiIvPjwvc3ZnPg=="> 
+                        <h1><span class="tbold">Github</span> profiles</h1> 
+                    </a> 
+                    <router-link to="/" class="header-btn"> 
+                        <a class="btn-lb">change username</a> 
+                    </router-link> 
+                </div> 
+                <div class="container2"> 
+                <div class="profile"> 
+                    <img class="avatar" :src="userData.avatar_url"> 
+                    <span class="profile_info"> 
+                    <h2 class="profile_info_name">{{ userData.name }}</h2> 
+                    <h3 class="profile_info_bio">{{ userData.bio }}</h3> 
+                    </span> 
+                </div> 
+                <nav id="underlineNav"> 
+                    <a class="underlineNav_link" @click="changeTab('Repos')" :class="{ active_underline: activeTab === 'Repos' }">
+                        <h2>Repos</h2> 
+                        <span class="counter">{{ repos.length }}</span> 
+                    </a> 
+                    <a class="underlineNav_link" @click="changeTab('Starred')" :class="{ active_underline: activeTab === 'Starred' }">
+                        <h2>Starred</h2> 
+                        <span class="counter">{{ starred.length }}</span> 
+                    </a> 
+                </nav> 
+                <div class="reposList"> 
+                    <label class="nameFilter"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z"></path></svg> 
+                        <input type="text" class="nameFilter_input" v-model="filterText" @input="applyFilter" placeholder="Filter by name">
+                    </label> 
+                    <ul class="wrapper"> 
+                        <li v-for="repo in activeTab === 'Repos' ? repos : starred" :key="repo.id" class="reposList_item">
+                            <a :href="repo.html_url" target="_blank">{{ repo.name }}</a> 
+                            <p class="reposList_item_description">{{ repo.description }}</p> 
+                            <section class="reposList_item_git-info">  
+                                <span class="reposList_item_git-info_lang">{{ repo.language }}</span> 
+                                    <img class="iconRep" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjQgMTAuOTM1djIuMTMxbC0xMCA0LjkzNHYtMi4yM2w3LjY0LTMuNzctNy42NC0zLjc3OXYtMi4yMjFsMTAgNC45MzV6bS0yNCAwdjIuMTMxbDEwIDQuOTM0di0yLjIzbC03LjY0LTMuNzcgNy42NC0zLjc3OXYtMi4yMjFsLTEwIDQuOTM1eiIvPjwvc3ZnPg=="> 
+                                </span> 
+                                <span class="reposList_item_git-info_fork">{{ repo.forks_count }}</span> 
+                                    <img class="iconRep" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjEgNGgtMnYyaC0ydi0yaC0ydi0yaDJ2LTJoMnYyaDJ2MnptLTQuMTMgNGMtLjU3NyAyLjMxNy0yLjQ0NSAyLjcyMy00LjgxNyAzLjIyMy0xLjcxLjM2LTMuNjQzLjc3NS01LjA1MyAyLjA4NXYtNy40OTJjMS4xNjItLjQxMyAyLTEuNTExIDItMi44MTYgMC0xLjY1Ny0xLjM0My0zLTMtM3MtMyAxLjM0My0zIDNjMCAxLjMwNS44MzggMi40MDMgMiAyLjgxNnYxMi4zNjdjLTEuMTYyLjQxNC0yIDEuNTEyLTIgMi44MTcgMCAxLjY1NyAxLjM0MyAzIDMgM3MzLTEuMzQzIDMtM2MwLTEuMjk1LS44MjQtMi4zODgtMS45NzMtMi44MDguMjctMy45MjIgMi41Ny00LjQwOCA1LjQzOC01LjAxMiAyLjYxMS0uNTUgNS43MzMtMS4yMyA2LjQzNS01LjE4aC0yLjAzem0tMTIuNjctNWMwLS45OTMuODA4LTEuOCAxLjgtMS44czEuOC44MDcgMS44IDEuOC0uODA4IDEuOC0xLjggMS44LTEuOC0uODA3LTEuOC0xLjh6bTMuNiAxOGMwIC45OTMtLjgwOCAxLjgtMS44IDEuOHMtMS44LS44MDctMS44LTEuOC44MDgtMS44IDEuOC0xLjggMS44LjgwNyAxLjggMS44eiIvPjwvc3ZnPg=="> 
+                                </span> 
+                        </li> 
+                    </ul> 
+                </div"> 
+            </div>`,
+            computed: {
+                //propriedade computada pra acessar os dados do usuário
+                userData() {
+                    return this.$store.state.user;
+                }
+            }
+        };
+        //configuração do vuex store que fará o tráfego de dados
+        const store = new Vuex.Store({
+        state: {
+            user: {
+                name: '',
+                avatar_url: '',
+                bio: ''
+            },
+            repos: []
+        },
+        mutations: {
+            //,utação para atualizar os dados no estado global
+            setUser(state, userData) {
+                state.user = userData;
+            },
+            setRepos(state, repos) {
+            state.repos = repos;
+            }
+        }
+    });
+    //configuração das rotas
+        const router = new VueRouter({
+            routes: [
+                { path: '/', component: Home },
+                { path: '/user/:username', name: 'UserDetails', component: UserDetails }
+            ]
+        });
+        //criação da instância principal
+        new Vue({
+            el: '#app',
+            router,
+            store
+        });
+    </script>
+</body>
+</html>
