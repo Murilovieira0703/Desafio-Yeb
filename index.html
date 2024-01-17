@@ -59,6 +59,14 @@
                         return;
                     }
                     //configuração da chamada à API do github
+                    
+                    //Este link pertence a outro projeto meu hospedado na internet e está conectado a um banco de dados. Enfrentei alguns problemas ao comunicar-me com o token do GitHub.
+                    //O GitHub não permite que incluamos o token diretamente no código, pois isso é considerado uma prática insegura. Assim, optamos por utilizar 
+                    //variáveis de ambiente como uma prática mais segura. No entanto, eu não estava ciente de que, ao usar o Vue via CDN em vez do CLI, poderia haver problemas com essas variáveis. 
+                    //Não conseguia acessá-las, e, para contornar essa situação e apresentar o projeto, tomei uma medida temporária.
+                    //Adicionei o token ao meu banco de dados (daí o link; este banco de dados é parte do meu Trabalho de Conclusão de Curso - TCC) e criei uma página chamada token.php 
+                    //para enviar o link como $token. É um código simples, mas eficaz para resolver o problema temporariamente.
+                    //Espero que isso não seja um ponto negativo, pois foi uma simples solução, peço desculpas pela inexperiência.
                     const res = await axios.get('https://happypaw.website/token.php');
                     const token = res.data.token;
                     console.log(token);
