@@ -1,0 +1,475 @@
+* {
+    box-sizing: border-box;
+    color: #586069;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans",Arial,Helvetica;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+input[type="text"] {
+    margin: 10px 0;
+    display: block;
+}
+
+li {
+    list-style-type: none;
+}
+
+#logoBar{
+    background-color: #5c646d;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.8rem 0.8rem;
+    min-width: 100%;
+    height: 57.19px;
+}
+
+#logoBar img,
+#logoBar h1 {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 5px;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.logoBar_link{
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+}
+
+.logoBar_link img {
+    filter: invert(1);
+    height: 25px;
+}
+
+.tbold{
+    color: #fff;
+    font-weight: bold;
+}
+
+.new-username{
+    padding-top: 20px;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.newUser{
+    align-self: center;
+    border: 2px solid #E3E3E3;
+    border-radius: 5px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    margin: 16px 0;
+    padding: 0 1rem;
+    position: relative;
+    width: 90%;
+    max-width: 350px;
+    color: #586069;
+}
+
+.newUser svg path{
+    fill: #999999;
+}
+
+.newUser_input{
+    border: none;
+    outline: none;
+    color: #586069;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.avatar{
+    border-radius: 50%;
+}
+
+.header-btn{
+    display: flex;
+    width: 104px;
+    height: 20px;
+    background-color: #5c646d;
+    color: #fff;
+    border: 1px solid;
+    border-radius: 7px;
+    padding: 0.1rem;
+    text-transform: uppercase;
+    text-align: center;
+    justify-content: center !important;
+    align-items: center !important;
+    letter-spacing: 1px;
+}
+
+.header-btn:hover{
+    color: #e36209;
+    width: 110px;
+    height: 25px;
+    transition: .3s;
+}
+
+.btn-lb{
+    justify-content: center;
+    align-items: center;
+    font-size: 0.5rem;
+    font-weight: 600;
+}
+
+.profile{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin: 2rem;
+    padding: 0.5rem;
+}
+
+.profile .profile_info_name{
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.profile .profile_info_bio{
+    font-size: 1rem;
+    font-weight: lighter;
+}
+
+#underlineNav{
+    border-bottom: 1px solid #E1E4E8;
+        display: flex;
+        justify-content: space-evenly;
+        margin: 0;
+        width: 100%;
+}
+
+#underlineNav .underlineNav_link {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 3rem;
+    width: 100%;
+    cursor: pointer;
+}
+
+#underlineNav .underlineNav_link:hover h2{
+    color: #000000;
+}
+
+#underlineNav .underlineNav_link h2{
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+#underlineNav .active_underline {
+    border-bottom: 5px solid #E36209;
+}
+
+#underlineNav .active_underline h2{
+    font-weight: 600!important;
+}
+
+#underlineNav .underlineNav_link .counter{
+    background-color: #E3E3E3;
+    border: 1px solid transparent;
+    border-radius: 2rem;
+    display: flex;
+    line-height: 18px;
+    min-width: 25px;
+    padding: 0 6px;
+    text-align: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #586069;
+}
+
+.reposList{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.repoList *{
+    font-size: 7px;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 1rem;
+}
+
+.nameFilter{
+    align-self: start;
+    border: 2px solid #E3E3E3;
+    border-radius: 5px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+    margin: 1rem 3vw;
+    padding: 0 1rem;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+}
+
+.nameFilter .nameFilter_input{
+    border: none;
+    font-size: 1rem;
+    height: 20px;
+    width: 90%;
+    outline: 0;
+}
+
+.nameFilter svg path{
+    fill: #999999;
+}
+
+.reposList .reposList_item{
+    border-bottom: 1px solid #c3c7cc;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 0.5rem;
+}
+
+.reposList .reposList_item_description{
+    grid-column: 1/span all;
+}
+
+.reposList .reposList_item_git-info{
+    grid-column: 1;
+    grid-row: 3;
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.reposList .reposList_item_git-info_lang, .reposList .reposList_item_git-info_fork{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.iconRep{
+    height: 15px;
+    width: 15px;
+}
+
+.reposList .reposList_item a:hover{
+    text-decoration: underline;
+}
+
+.reposList .reposList_item a{
+    grid-column:  1/span all;
+    line-height: 3.4rem;
+    font-size: 10px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #389adb;
+}
+
+@media only screen and (min-width: 1080px){
+    .avatar{
+        height: 210px;
+        width: 210px;
+    }
+    
+    .profile{
+        flex-direction: column;
+        grid-row: 3;
+    }
+
+    .container2{
+        display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+        align-content: center;
+    }
+
+    #underlineNav{
+        align-self: start;
+        grid-column: 2/span all;
+        grid-row: 3;
+    }
+
+    .reposList{
+        align-self: center;
+        grid-column: 2/span all;
+        grid-row: 3;
+        margin: 100px 0 0 !important;
+    }
+
+    .nameFilter{
+        margin: 1rem 1vw;
+        max-width: 400px;
+    }
+
+    .profile .profile_info_name .profile_info_bio{
+        text-align: center;
+    }
+}
+
+
+@media only screen and (min-width: 768px){
+    .profile{
+        gap: 2rem;
+    }
+
+    #underlineNav{
+        justify-content: flex-start;
+        max-height: 60px;
+    }
+
+   #underlineNav .underlineNav_link{
+    width: 200px;
+   }
+}
+
+@media only screen and (max-width: 991px){
+    #logoBar{
+        width: 100%;
+        height: 130px;
+    }
+
+    #logoBar h1 {
+        font-size: 3.5rem;
+    }
+
+    #logoBar img {
+        height: 60px;
+    }
+
+    .newUser{
+        border: 4px solid #E3E3E3;
+        border-radius: 10px;
+        max-width: 700px;
+    }
+
+    .newUser svg {
+        width: 45px;
+        height: 45px;
+    }
+
+    .newUser_input{
+        font-size: 2rem;
+        height: 70px;
+    }
+    
+    .new-username{
+        padding-top: 50px;
+    }
+
+    .header-btn{
+        width: 220px;
+        height: 45px;
+        border-radius: 15px;
+        border: 3px solid;
+    }
+
+    .btn-lb{
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .header-btn:hover{
+        width: 220px !important;
+        height: 45px !important;
+        border-radius: 15px;
+    }
+
+    .profile{
+        text-align: left;
+    }
+
+    .profile .profile_info_name{
+        font-size: 3.2rem;
+    }
+
+    .profile .profile_info_bio{
+        font-size: 2rem;
+    }
+
+    .avatar{
+        height: 150px;
+        width: 150px;
+    }
+
+    #underlineNav{
+        justify-content: space-evenly;
+        margin: 4rem 0;
+    }
+
+    #underlineNav .underlineNav_link{
+        width: 500px;
+    }
+
+    #underlineNav .active_underline{
+        border-bottom: 10px solid #E36209;
+    }
+
+    #underlineNav .underlineNav_link h2{
+        font-size: 3rem;
+        margin-bottom: 22px;
+    }
+
+    #underlineNav .underlineNav_link .counter{
+        font-size: 1.8rem;
+        margin-bottom: 18px;
+        min-width: 50px;
+        line-height: 40px;
+    }
+
+    .nameFilter{
+        border: 4px solid #E3E3E3;
+        border-radius: 10px;
+        max-width: 800px;
+        margin: 3rem 5vw;
+    }
+
+    .nameFilter .nameFilter_input{
+        font-size: 2.5rem;
+        height: 65px;
+    }
+
+    .nameFilter svg{
+        width: 45px;
+        height: 45px;
+    }
+
+    .reposList .reposList_item{
+        gap: 1.2rem;
+        padding: 2rem 0;
+    }
+
+    .iconRep{
+        height: 36px;
+        width: 36px;
+    }
+
+    .reposList .reposList_item_git-info_lang {
+        font-size: 2rem;
+    }
+
+    .reposList .reposList_item_git-info{
+        font-size: 2rem;
+    }
+}
